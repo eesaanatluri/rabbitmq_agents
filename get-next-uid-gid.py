@@ -33,7 +33,8 @@ def get_next_uid_gid(ch, method, properties, body):
 
     # Determine next available UID
     try:
-        if user_exists(username):
+        #if user_exists(username):
+        if False:
             print("The user, {} already exists".format(username))
             sys.exit(1)
 
