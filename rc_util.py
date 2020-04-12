@@ -2,16 +2,18 @@ from rc_rmq import RCRMQ
 import json
 
 rc_rmq = RCRMQ({'exchange': 'RegUsr', 'exchange_type': 'topic'})
-tasks = {'ohpc_account': None, 'ood_account': None, 'slurm_account': None}
+tasks = {'get_next_uid_gid':'','bright_account':'','subscribe_mail_list':''}
 
-def add_account(username, email, full='', reason=''):
+def add_account(username, email, full='', reason='', uid='', gid=''):
   rc_rmq.publish_msg({
     'routing_key': 'request.' + username,
     'msg': {
       "username": username,
       "email": email,
       "fullname": full,
-      "reason": reason
+      "reason": reason,
+      "uid": uid,
+      "gid": gid
     }
   })
   rc_rmq.disconnect()
