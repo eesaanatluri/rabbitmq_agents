@@ -7,14 +7,16 @@ rc_rmq = RCRMQ({'exchange': 'RegUsr', 'exchange_type': 'topic'})
 tasks = {'ohpc_account': None, 'ood_account': None, 'slurm_account': None}
 logger_fmt = '%(asctime)s %(levelname)s [%(module)s] - %(message)s'
 
-def add_account(username, email, full='', reason=''):
+def add_account(username, email, full='', reason='', uid='', gid=''):
   rc_rmq.publish_msg({
     'routing_key': 'request.' + username,
     'msg': {
       "username": username,
       "email": email,
       "fullname": full,
-      "reason": reason
+      "reason": reason,
+      "uid": uid,
+      "gid": gid
     }
   })
   rc_rmq.disconnect()
