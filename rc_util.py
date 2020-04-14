@@ -5,7 +5,7 @@ import json
 
 rc_rmq = RCRMQ({'exchange': 'RegUsr', 'exchange_type': 'topic'})
 tasks = {'ohpc_account': None, 'ood_account': None, 'slurm_account': None}
-logger_fmt = '%(asctime)s [%(module)s] - %(message)s'
+logger_fmt = '%(asctime)s %(levelname)s [%(module)s] - %(message)s'
 
 def add_account(username, email, full='', reason=''):
   rc_rmq.publish_msg({
