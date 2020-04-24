@@ -15,7 +15,7 @@ rc_rmq = RCRMQ({'exchange': 'RegUsr', 'exchange_type': 'topic'})
 args = rc_util.get_args()
 
 # Logger
-logger = rc_util.get_logger()# Define your callback function
+logger = rc_util.get_logger()
 
 # Open registry table in DB
 db = dataset.connect('sqlite:///reg_logger.db')
