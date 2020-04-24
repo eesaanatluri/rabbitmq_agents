@@ -2,18 +2,20 @@
 import json
 import sys
 import dataset
-import logging
+import rc_util
 from rc_rmq import RCRMQ
 
 # Define queue name 
 task = 'reg_logger'
 
-# Instantiate logging object 
-logging.basicConfig(format='%(asctime)s[%(levelname)s] - %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 # Instantiate rabbitmq object
-reg_logger = RCRMQ({'exchange': 'RegUsr', 'exchange_type': 'topic'})
+rc_rmq = RCRMQ({'exchange': 'RegUsr', 'exchange_type': 'topic'})
+
+# Parse arguments
+args = rc_util.get_args()
+
+# Logger
+logger = rc_util.get_logger()# Define your callback function
 
 # Open registry table in DB
 db = dataset.connect('sqlite:///reg_logger.db')
@@ -31,7 +33,7 @@ def log_registration(ch, method, properties, body):
 logger.info("Start listening to queue: {}".format(task))
 
 # Start consuming messages from queue with callback function
-reg_logger.start_consume({
+rc_rmq.start_consume({
   'queue': task,
   'routing_key': "create.*",
   'cb': log_registration
